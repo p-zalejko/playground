@@ -35,26 +35,30 @@ public class AppTest {
         String redisAddress = "redis://" + host + ":" + port;
         String streamName = "helloMyStream";
 
-        var testConsumer = new TestConsumer();
-        var producer = new StreamProducer(redisAddress);
-        var consumer = new StreamConsumer(redisAddress, streamName, testConsumer, "0-0");
-        producer.init();
-        consumer.init();
 
-        // when
-        var messages = IntStream.range(0, 10)
-                .mapToObj(Integer::toString)
-                .map(i -> new StreamProducer.Message("myKey", i))
-                .toList();
+        try (var producer = new StreamProducer(redisAddress)) {
+            var testConsumer = new TestConsumer();
+            try (var consumer = new StreamConsumer(redisAddress, streamName, testConsumer, "0-0")) {
+                producer.init();
+                consumer.init();
 
-        messages.forEach(i -> producer.send(streamName, i));
+                // when
+                List<StreamProducer.Message> messages = IntStream.range(0, 10)
+                        .mapToObj(Integer::toString)
+                        .map(i -> new StreamProducer.Message("myKey", i))
+                        .toList();
 
-        // then
-        await()
-                .atMost(Durations.TEN_SECONDS)
-                .with()
-                .pollInterval(Durations.ONE_HUNDRED_MILLISECONDS)
-                .until(() -> testConsumer.containsAll(messages));
+                messages.forEach(i -> producer.send(streamName, i));
+
+                // then
+                await()
+                        .atMost(Durations.TEN_SECONDS)
+                        .with()
+                        .pollInterval(Durations.ONE_HUNDRED_MILLISECONDS)
+                        .until(() -> testConsumer.containsAll(messages));
+
+            }
+        }
     }
 
     private static class TestConsumer implements StreamConsumer.Consumer {
