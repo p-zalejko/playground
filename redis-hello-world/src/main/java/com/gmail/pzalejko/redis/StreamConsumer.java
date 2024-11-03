@@ -22,7 +22,6 @@ import java.util.function.Supplier;
 
 public class StreamConsumer implements Closeable {
 
-
     @FunctionalInterface
     public interface Consumer {
         void accept(Map<String, String> message);

@@ -15,27 +15,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-/**
- * Unit test for simple App.
- */
 @Testcontainers
 public class AppTest {
 
     @Container
-    public GenericContainer redis = new GenericContainer(DockerImageName.parse("redis:7-alpine"))
+    public static final GenericContainer REDIS = new GenericContainer(DockerImageName.parse("redis:7-alpine"))
             .withExposedPorts(6379);
-
 
     @Test
     void top_level_container_should_be_running() {
-        assertThat(redis.isRunning()).isTrue();
+        assertThat(REDIS.isRunning()).isTrue();
     }
 
     @Test
     public void shouldSendAndReceiveMessages() {
         //given
-        String host = redis.getHost();
-        Integer port = redis.getFirstMappedPort();
+        String host = REDIS.getHost();
+        Integer port = REDIS.getFirstMappedPort();
         String redisAddress = "redis://" + host + ":" + port;
         String streamName = "helloMyStream";
 
