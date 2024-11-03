@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 @Testcontainers
+@SuppressWarnings("all")
 public class AppTest {
 
     @Container
@@ -23,7 +24,7 @@ public class AppTest {
             .withExposedPorts(6379);
 
     @Test
-    void top_level_container_should_be_running() {
+    void redisShouldBeRunning() {
         assertThat(REDIS.isRunning()).isTrue();
     }
 
@@ -34,7 +35,6 @@ public class AppTest {
         Integer port = REDIS.getFirstMappedPort();
         String redisAddress = "redis://" + host + ":" + port;
         String streamName = "helloMyStream";
-
 
         try (var producer = new StreamProducer(redisAddress)) {
             var testConsumer = new TestConsumer();
@@ -56,7 +56,6 @@ public class AppTest {
                         .with()
                         .pollInterval(Durations.ONE_HUNDRED_MILLISECONDS)
                         .until(() -> testConsumer.containsAll(messages));
-
             }
         }
     }

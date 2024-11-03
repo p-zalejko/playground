@@ -42,7 +42,7 @@ public class StreamProducer implements Closeable {
         }
 
         RedisAsyncCommands<String, String> async = connection.async();
-        Map<String, String> body = Collections.singletonMap(message.key, message.body);
+        Map<String, String> body = Collections.singletonMap(message.key, message.body   );
         async.xadd(streamName, body);
     }
 
