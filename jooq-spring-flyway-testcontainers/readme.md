@@ -1,4 +1,4 @@
-# Jooq code generation using testcontainers
+# Jooq code generation using Testcontainers and Flyway
 
 It's a solution inspired by the https://github.com/jOOQ/jOOQ/issues/6551#issuecomment-908494321 . It leverages:
 - `groovy-maven-plugin` for starting PostgreSQL using Testcontainers
