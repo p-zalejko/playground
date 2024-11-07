@@ -9,7 +9,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 @SpringBootTest
 @Testcontainers
-class BackendApplicationTests {
+class ApplicationTests {
 
     @Container
     @ServiceConnection
