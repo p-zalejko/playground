@@ -30,7 +30,7 @@ class JooqMeasurementRepository {
     }
 
     int count() {
-        //bad practice of having such a method, but it's just hello world example app...
+        //bad practice of having such a method, but it's just hello world...
         return dsl.fetchCount(Measurement.MEASUREMENT);
     }
 }
