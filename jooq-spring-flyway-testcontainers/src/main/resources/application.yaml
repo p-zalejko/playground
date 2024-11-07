@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: example
+  flyway:
+    baselineOnMigrate: true
+    enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dev?currentSchema=dev
+    username: dev
+    password: dev
