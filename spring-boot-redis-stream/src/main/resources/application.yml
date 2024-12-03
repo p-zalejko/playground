@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    redis:
+      port: 6379
+      host: localhost
+
+my-stream:
+  stream-key-v1: my-items-v1
+  stream-key-v2: my-items-v2
