@@ -1,0 +1,7 @@
+# see https://www.graalvm.org/latest/reference-manual/native-image/guides/containerise-native-executable-and-run-in-docker-container/
+FROM container-registry.oracle.com/os/oraclelinux:9-slim
+
+ARG APP_FILE
+
+COPY ${APP_FILE} app
+ENTRYPOINT ["/app"]
